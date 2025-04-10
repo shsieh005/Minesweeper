@@ -13,7 +13,7 @@ This game uses the `pygame` library. You can install it using `pip`.
 pip install pygame
 ```
 
-### For Windows:
+### For Mac:
 ```bash
 python3 -m pip install pygame
 ```
