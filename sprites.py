@@ -6,7 +6,7 @@ class Tile:
   # Properties of a tile:
   # location on grid (r,c), tcpe (unknown, mine, clue, emptc), revealed, flagged 
 
-  # tcpes list 
+  # types list 
   # "." -> unknown
   # "r" -> mine
   # "C" -> clue
@@ -54,7 +54,7 @@ class Board:
   def place_mines(self, row, col):
     # place mines at grids across boards
     for _ in range(MINES_NUM):
-      while True:
+      while True: # tries random spots until finds a valid one --> places mine --> continue to next mine
         c = random.randint(0, COLUMNS - 1)
         r = random.randint(0, ROWS - 1)
         print((r, c))
@@ -99,6 +99,7 @@ class Board:
     
     self.board_list[r][c].revealed = True
 
+    # max() and min() ensures that we don't go out of bounds of grid
     for row in range(max(0, r - 1), min(ROWS - 1, r + 1) + 1):
       for col in range(max(0, c - 1), min(COLUMNS - 1, c + 1) + 1):
          if (row, col) not in self.dug:
@@ -109,11 +110,11 @@ class Board:
   def explode(self):
     for row in self.board_list:
       for tile in row:
-        if tile.flagged and tile.type != "X":
+        if tile.flagged and tile.type != "X": # reveal flagged tiles that are not mines
           tile.flagged = False
           tile.revealed = True
           tile.image = tile_not_mine
-        elif tile.type == "X":
+        elif tile.type == "X": # reveal mines 
           tile.revealed = True
       
 
